@@ -42,10 +42,14 @@ int main(int argc, char *argv[]) {
     // Escribimos el PID en /var/run/ para hacer stop/restart 
     int lfp;
     char str[10];
-    lfp = open("/var/run/ruloxdaemon.pid",O_RDWR|O_CREAT,0640);
-    if (lfp<0) exit(1); /* can not open */
+    lfp = open("/var/run/ruloxdaemon.pid", O_RDWR|O_CREAT, 0640);
+
+    if (lfp < 0) {
+        exit(1); 
+    }
+
     sprintf(str,"%d\n",getpid());
-    write(lfp,str,strlen(str)); /* record pid to lockfile */
+    write(lfp, str, strlen(str)); 
 
     if ((chdir("/")) < 0) {
         exit(EXIT_FAILURE);
@@ -57,7 +61,6 @@ int main(int argc, char *argv[]) {
     
     /* Bucle principal del demonio */ 
     while (1) {
-       
        sleep(30); 
     }
     
