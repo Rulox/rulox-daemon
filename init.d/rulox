@@ -1,0 +1,38 @@
+#!/bin/bash
+startD=/home/raul/master/demonio/ruloxdaemon
+
+
+start() {
+    echo "Comenzando el servicio [ruloxdaemon]"
+    $startD $*
+}
+
+stop() {
+    echo "Parando el servicio [ruloxdaemon]" 
+    pid=$(cat /var/run/ruloxdaemon.pid)
+    kill $pid
+    rm /var/run/ruloxdaemon.pid
+}
+
+restart() {
+    echo "Reiniciando el servicio [ruloxdaemon]"
+    stop
+    start
+}
+
+case "$1" in
+start)
+    shift
+    start $*
+;;
+stop)
+    stop
+;;
+restart)
+    restart
+;;
+*)
+    echo "Uso: rulox [start|stop|restart] ruta_directorio"
+exit 1
+esac
+exit 0
