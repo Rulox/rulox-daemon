@@ -32,7 +32,6 @@ using namespace std;
 const char * mostrarEvento(struct inotify_event* event) {
     string message;
     message +=  event -> wd;
-    // if cookie > 0 lo imprimimos
 
     message += (" \nAction= ");
     if (event -> mask& IN_CREATE)
@@ -217,7 +216,6 @@ int main(int argc, char *argv[]) {
         } else {
             for (b = buf; b < buf + numread;)  {
                 event = (struct inotify_event*)b;
-                //if (event -> mask& IN_CREATE) // Antes de enviarlo al LOG
                 const char * message = mostrarEvento(event);
                 bzero(buffer, 256);
                 strncpy(buffer, message, 255);
@@ -225,7 +223,6 @@ int main(int argc, char *argv[]) {
                 b += sizeof(struct inotify_event) + event -> len;
             }
         }
-    //rmwatch
     }
     close(sockfd); 
     closelog();
